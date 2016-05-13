@@ -26,6 +26,10 @@ Matrix *setBlock(int[4]);
 
 int *getBlock(Matrix*);
 
+int shiftRows(Matrix*);
+
+int shiftCols(Matrix*);
+
 void matrixPrint(Matrix*);
 
 #endif

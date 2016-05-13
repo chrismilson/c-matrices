@@ -48,6 +48,20 @@ Matrix *matrixProduct(Matrix *a, Matrix *b) {
   }
 }
 
+void matrixPrint(Matrix *matrix) {
+  int i, j;
+  for (i = 0; i < matrix->cols; i++) {
+    for (j = 0; j < matrix->rows; j++) {
+      printf("%d\t", matrix->entries[i + j * matrix->cols]);
+    }
+    printf("\n");
+  }
+  printf("\n");
+  return;
+}
+
+// The following functions are specifically for use with AES (advanced
+// encryption standard).
 Matrix *setBlock(int val[4]) {
   int i, j;
   Matrix *block;
@@ -78,14 +92,34 @@ int *getBlock(Matrix *matrix) {
   return val;
 }
 
-void matrixPrint(Matrix *matrix) {
+int shiftRows(Matrix *matrix) {
   int i, j;
-  for (i = 0; i < matrix->cols; i++) {
-    for (j = 0; j < matrix->rows; j++) {
-      printf("%d\t", matrix->entries[i + j * matrix->cols]);
+  Matrix *result;
+  result = newMatrix(4, 4);
+  if (matrix->rows == 4 || matrix->cols == 4) {
+    for (i = 0; i < 4; i++) {
+      for (j = 0; j < 4; j++) {
+        result->entries[j + i * 4] = matrix->entries[j + ((i + j) % 4) * 4];
+      }
     }
-    printf("\n");
+    *matrix = *result;
+    return 0;
   }
-  printf("\n");
-  return;
+  return 1;
+}
+
+int shiftCols(Matrix *matrix) {
+  int i, j;
+  Matrix *result;
+  result = newMatrix(4, 4);
+  if (matrix->rows == 4 || matrix->cols == 4) {
+    for (i = 0; i < 4; i++) {
+      for (j = 0; j < 4; j++) {
+        result->entries[i + j * 4] = matrix->entries[((i + j) % 4) + j * 4];
+      }
+    }
+    *matrix = *result;
+    return 0;
+  }
+  return 1;
 }

@@ -22,4 +22,10 @@ int set(int, int, int, Matrix*);
 
 Matrix *matrixProduct(Matrix*, Matrix*);
 
+Matrix *setBlock(int[4]);
+
+int *getBlock(Matrix*);
+
+void matrixPrint(Matrix*);
+
 #endif

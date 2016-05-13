@@ -22,14 +22,20 @@ int set(int, int, int, Matrix*);
 
 Matrix *matrixProduct(Matrix*, Matrix*);
 
+void matrixPrint(Matrix*);
+
 Matrix *setBlock(int[4]);
 
 int *getBlock(Matrix*);
 
-int shiftRows(Matrix*);
+Matrix *shiftRows(Matrix*);
 
-int shiftCols(Matrix*);
+Matrix *unshiftRows(Matrix*);
 
-void matrixPrint(Matrix*);
+Matrix *shiftCols(Matrix*);
+
+Matrix *unshiftCols(Matrix*);
+
+Matrix *matrixXOR(Matrix*, Matrix*);
 
 #endif

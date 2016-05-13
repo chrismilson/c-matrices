@@ -92,7 +92,7 @@ int *getBlock(Matrix *matrix) {
   return val;
 }
 
-int shiftRows(Matrix *matrix) {
+Matrix *shiftRows(Matrix *matrix) {
   int i, j;
   Matrix *result;
   result = newMatrix(4, 4);
@@ -102,13 +102,27 @@ int shiftRows(Matrix *matrix) {
         result->entries[j + i * 4] = matrix->entries[j + ((i + j) % 4) * 4];
       }
     }
-    *matrix = *result;
-    return 0;
+    return result;
   }
-  return 1;
+  return NULL;
 }
 
-int shiftCols(Matrix *matrix) {
+Matrix *unshiftRows(Matrix *matrix) {
+  int i, j;
+  Matrix *result;
+  result = newMatrix(4, 4);
+  if (matrix->rows == 4 || matrix->cols == 4) {
+    for (i = 0; i < 4; i++) {
+      for (j = 0; j < 4; j++) {
+        result->entries[j + i * 4] = matrix->entries[j + ((i + (4 - j)) % 4) * 4];
+      }
+    }
+    return result;
+  }
+  return NULL;
+}
+
+Matrix *shiftCols(Matrix *matrix) {
   int i, j;
   Matrix *result;
   result = newMatrix(4, 4);
@@ -118,8 +132,39 @@ int shiftCols(Matrix *matrix) {
         result->entries[i + j * 4] = matrix->entries[((i + j) % 4) + j * 4];
       }
     }
-    *matrix = *result;
-    return 0;
+    return result;
   }
-  return 1;
+  return NULL;
+}
+
+Matrix *unshiftCols(Matrix *matrix) {
+  int i, j;
+  Matrix *result;
+  result = newMatrix(4, 4);
+  if (matrix->rows == 4 || matrix->cols == 4) {
+    for (i = 0; i < 4; i++) {
+      for (j = 0; j < 4; j++) {
+        result->entries[i + j * 4] = matrix->entries[((i + (4 - j)) % 4) + j * 4];
+      }
+    }
+    return result;
+  }
+  return NULL;
+}
+
+Matrix *matrixXOR(Matrix *a, Matrix *b) {
+  if (a->rows == b->rows && a->cols == b->cols) {
+    int rows = a->rows, cols = a->cols, i, j;
+    Matrix *result;
+    result = newMatrix(rows, cols);
+
+    for (i = 0; i < rows; i++) {
+      for (j = 0; j < cols; j++) {
+        result->entries[i + j * rows] = a->entries[i + j * rows] ^
+          b->entries[i + j * rows];
+      }
+    }
+    return result;
+  }
+  return NULL;
 }

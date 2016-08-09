@@ -1,2 +1,2 @@
 # c-matrices
-Just another matrix "class".
+Just another matrix class.
